@@ -5,8 +5,7 @@ import ServicesDashboard from "./components/ServicesDashboard";
 import "./App.css";
 import { useAuth } from "./context";
 
-const CLIENT_ID =
-  "443701407017-o6ftoehhbmcc2gng1h3pkanl4sh6ifkp.apps.googleusercontent.com";
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
