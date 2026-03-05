@@ -32,6 +32,12 @@ import {
   DialogBody,
   DialogFooter,
 } from "../../components/ui";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function DsrForm() {
   const { token, userEmail } = useAuth();
@@ -92,13 +98,10 @@ export default function DsrForm() {
   };
 
   const renderTaskSection = (title: string, category: keyof typeof tasks) => (
-    <Card className="mb-4">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-sm uppercase tracking-wide border-b-2 border-secondary pb-3">
-          {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
+    <AccordionItem value={category}>
+      <AccordionTrigger>{title}</AccordionTrigger>
+      <AccordionContent className="space-y-3">
+        {/* <CardContent > */}
         {tasks[category].map((task, index) => (
           <div key={index} className="flex items-center gap-3">
             <span className="w-7 h-7 bg-secondary rounded-lg flex items-center justify-center text-sm font-semibold text-muted-foreground shrink-0">
@@ -131,8 +134,16 @@ export default function DsrForm() {
           <Plus className="w-4 h-4" />
           Add Task
         </Button>
-      </CardContent>
-    </Card>
+        {/* </CardContent> */}
+      </AccordionContent>
+    </AccordionItem>
+    // <Card className="mb-4">
+    //   <CardHeader className="pb-3">
+    //     <CardTitle className="text-sm uppercase tracking-wide border-b-2 border-secondary pb-3">
+    //       {title}
+    //     </CardTitle>
+    //   </CardHeader>
+    // </Card>
   );
 
   return (
@@ -384,18 +395,24 @@ export default function DsrForm() {
           </div>
         </CardContent>
       </Card>
-
-      {/* Task Sections */}
-      {renderTaskSection(
-        "Incomplete Tasks of Previous Day",
-        "incompletePrevious",
-      )}
-      {renderTaskSection("New Tasks for the Day", "newTasks")}
-      {renderTaskSection("Activities Performed", "activitiesPerformed")}
-      {renderTaskSection(
-        "Incomplete Tasks at End of Day",
-        "incompleteEndOfDay",
-      )}
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue="activitiesPerformed"
+        // className="max-w-lg"
+      >
+        {/* Task Sections */}
+        {renderTaskSection(
+          "Incomplete Tasks of Previous Day",
+          "incompletePrevious",
+        )}
+        {renderTaskSection("New Tasks for the Day", "newTasks")}
+        {renderTaskSection("Activities Performed", "activitiesPerformed")}
+        {renderTaskSection(
+          "Incomplete Tasks at End of Day",
+          "incompleteEndOfDay",
+        )}
+      </Accordion>
 
       {/* Submit Button */}
       <Button
